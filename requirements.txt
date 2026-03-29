@@ -1,0 +1,13 @@
+# Core
+python-dotenv>=1.0.0
+
+# Auth0
+auth0-python>=4.0.0
+
+# LLM
+openai>=1.0.0
+
+# Web framework (update based on your choice)
+# fastapi>=0.100.0
+# uvicorn>=0.23.0
+# flask>=3.0.0
