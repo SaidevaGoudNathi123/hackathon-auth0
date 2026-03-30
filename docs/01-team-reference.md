@@ -13,11 +13,16 @@
 - **Skills:** Python, OpenAI API, LLM orchestration, prompt engineering, API development
 - **GitHub:** SaidevaGoudNathi123
 
-### Teammate 2 — [Name TBD]
-- **Role:** [TBD]
+### Teammate 2 — [Lakshmi Bhargavi Vadlamani]
+- **Role:** [Data Engineer]
+- **Skills** 
+- **GitHub:** bhargavivadlamani 
 
-### Teammate 3 — [Name TBD]
-- **Role:** [TBD]
+### Teammate 3 — [likhitjuttada]
+- **Role:**  
+- **Skills** 
+- **GitHub:** likhitjuttada
+
 
 ## Judging Criteria
 1. **Technology Implementation** — How well you use Auth0 + Token Vault
