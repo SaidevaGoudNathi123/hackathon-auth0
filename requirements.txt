@@ -7,7 +7,15 @@ auth0-python>=4.0.0
 # LLM
 openai>=1.0.0
 
-# Web framework (update based on your choice)
-# fastapi>=0.100.0
-# uvicorn>=0.23.0
-# flask>=3.0.0
+# MCP server
+mcp>=1.0.0
+
+# Notion
+notion-client>=2.2.0
+
+# HTTP (for Auth0 Token Vault RFC 8693 exchange)
+requests>=2.31.0
+
+# OAuth callback server
+fastapi>=0.110.0
+uvicorn>=0.29.0
