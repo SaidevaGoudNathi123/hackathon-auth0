@@ -11,7 +11,7 @@ from auth0_vault import get_notion_token
 
 load_dotenv()
 
-NOTION_DATABASE_ID = os.environ.get("NOTION_DATABASE_ID", "")
+NOTION_DATA_SOURCE_ID = os.environ.get("NOTION_DATA_SOURCE_ID", "")
 
 app = Server("notion-mcp-server")
 
@@ -38,15 +38,15 @@ async def list_tools() -> list[types.Tool]:
             },
         ),
         types.Tool(
-            name="query_notion_database",
-            description="Query a Notion database with optional filters.",
+            name="query_notion_data_source",
+            description="Query a Notion data source (formerly database) with optional filters.",
             inputSchema={
                 "type": "object",
                 "properties": {
                     "user_token": {"type": "string"},
-                    "database_id": {
+                    "data_source_id": {
                         "type": "string",
-                        "description": "Notion database ID (defaults to NOTION_DATABASE_ID env var)",
+                        "description": "Notion data source ID (defaults to NOTION_DATA_SOURCE_ID env var)",
                     },
                     "filter": {
                         "type": "object",
@@ -73,12 +73,12 @@ async def list_tools() -> list[types.Tool]:
         ),
         types.Tool(
             name="create_notion_page",
-            description="Create a new page in a Notion database.",
+            description="Create a new page in a Notion data source.",
             inputSchema={
                 "type": "object",
                 "properties": {
                     "user_token": {"type": "string"},
-                    "database_id": {"type": "string"},
+                    "data_source_id": {"type": "string"},
                     "title": {
                         "type": "string",
                         "description": "Page title",
@@ -108,12 +108,12 @@ async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
         results = notion.search(query=arguments["query"])
         return [types.TextContent(type="text", text=str(results))]
 
-    elif name == "query_notion_database":
-        db_id = arguments.get("database_id") or NOTION_DATABASE_ID
-        kwargs = {"database_id": db_id}
+    elif name == "query_notion_data_source":
+        ds_id = arguments.get("data_source_id") or NOTION_DATA_SOURCE_ID
+        kwargs = {"data_source_id": ds_id}
         if arguments.get("filter"):
             kwargs["filter"] = arguments["filter"]
-        results = notion.databases.query(**kwargs)
+        results = notion.data_sources.query(**kwargs)
         return [types.TextContent(type="text", text=str(results))]
 
     elif name == "read_notion_page":
@@ -121,13 +121,13 @@ async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
         return [types.TextContent(type="text", text=str(page))]
 
     elif name == "create_notion_page":
-        db_id = arguments.get("database_id") or NOTION_DATABASE_ID
+        ds_id = arguments.get("data_source_id") or NOTION_DATA_SOURCE_ID
         props = dict(arguments.get("properties") or {})
         props["title"] = {
             "title": [{"text": {"content": arguments["title"]}}]
         }
         page_args = {
-            "parent": {"database_id": db_id},
+            "parent": {"type": "data_source_id", "data_source_id": ds_id},
             "properties": props,
         }
         if arguments.get("content"):

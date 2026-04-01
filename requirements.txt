@@ -11,7 +11,7 @@ openai>=1.0.0
 mcp>=1.0.0
 
 # Notion
-notion-client>=2.2.0
+notion-client>=3.0.0
 
 # HTTP (for Auth0 Token Vault RFC 8693 exchange)
 requests>=2.31.0
