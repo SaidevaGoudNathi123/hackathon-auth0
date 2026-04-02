@@ -146,19 +146,13 @@ passes it to the LLM as tool output.
 
 | Tool | What it does | Required args |
 |------|-------------|---------------|
-| `search_notion` | Full-text search across all pages and data sources | `user_token`, `query` |
-| `query_notion_data_source` | Query a data source with optional filters | `user_token` |
+| `search_notion` | Full-text search across all accessible pages | `user_token`, `query` |
 | `read_notion_page` | Retrieve a page's properties and content | `user_token`, `page_id` |
-| `create_notion_page` | Create a new page in a data source | `user_token`, `title` |
+| `append_to_notion_page` | Append paragraph text to an existing page | `user_token`, `page_id`, `content` |
+| `create_notion_page` | Create a new sub-page under a parent page | `user_token`, `title` |
 
-All tools accept an optional `data_source_id` argument. If omitted, they fall back to
-the `NOTION_DATA_SOURCE_ID` environment variable.
-
-> **API version note:** As of Notion API 2025-09-03, the `database` concept was split
-> into **databases** (schema/structure) and **data sources** (records). All
-> read/write operations now use `data_source_id` — `notion.data_sources.query()` for
-> queries and `parent: {type: "data_source_id", ...}` for page creation.
-> Requires `notion-client>=3.0.0`.
+`create_notion_page` accepts an optional `parent_page_id`. If omitted, it falls back to
+the `NOTION_PARENT_PAGE_ID` environment variable.
 
 ---
 
@@ -263,4 +257,4 @@ connection slug exactly — it is case-sensitive.
 | `BASE_URL` | `callback_server.py` | Public HTTPS URL (e.g. sslip.io address) |
 | `STATE_SECRET` | `callback_server.py` | Secret for signing CSRF state tokens |
 | `PORT` | `callback_server.py` | Internal port uvicorn listens on (default 8000) |
-| `NOTION_DATA_SOURCE_ID` | `notion_mcp_server.py` | Default Notion data source ID for tools |
+| `NOTION_PARENT_PAGE_ID` | `notion_mcp_server.py` | Default parent page ID for creating new pages |
